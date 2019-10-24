@@ -1,0 +1,4 @@
+1:[a, I]
+2:[be, to, of, in, it, on, he, as, do, at, by, we]
+3:[the, and, for, not, you, but, his]
+4:[that, have, with, this, from, they]
