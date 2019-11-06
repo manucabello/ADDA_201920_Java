@@ -20,7 +20,7 @@ public class Ejercicio2 {
 				valor = res.get(key);
 			}
 			valor.add(lineas.get(index));
-			res.put(key, valor);
+			res.put(key, valor);				// Este put es redundante
 			index++;
 		}
 		return res;
