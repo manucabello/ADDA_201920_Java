@@ -1,62 +1,70 @@
 package ejercicios;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import us.lsi.common.Files2;
+import us.lsi.common.Pair;
 
-// TODO Cambiar los List<Integer> por el tipo Tuple
 public class Ejercicio5 {
 	
 	// Solución iterativa
-	public static List<Integer> ejercicio5_itera(int a, int b) {
-		List<Integer> res = new ArrayList<Integer>();
-		res.add(0);
-		res.add(a);
-		
-		while (a >= b) {
-			res.set(0,res.get(0)+1);
+	public static Pair<Integer,Integer> ejercicio5_itera(int a, int b) {
+		Pair<Integer,Integer> res = Pair.of(0, a);
+		while(a >= b) {
 			a = a-b;
-			res.set(1, a);
+			res = Pair.of(res.a+1, a);
 		}
-		
 		return res;
 	}
 	
 	// Solución recursiva final
-	public static List<Integer> ejercicio5_recur_final(int a, int b, List<Integer> res) {
+	public static Pair<Integer,Integer> ejercicio5_recur_final(int a, int b, Pair<Integer,Integer> res) {
 		if (a < b) {
 			return res;
 		} else {
-			res.set(0,res.get(0)+1);
-			res.set(1, a-b);
-			return ejercicio5_recur_final(res.get(1),b,res);
+			res = Pair.of(res.a+1, a-b);
+			return ejercicio5_recur_final(res.b,b,res);
 		}
 	}
 	
-	public static List<Integer> ejercicio5_recur_final_gen(int a, int b) {
-		List<Integer> res = new ArrayList<Integer>();
-		res.add(0);
-		res.add(a);
+	public static Pair<Integer,Integer> ejercicio5_recur_final_gen(int a, int b) {
+		Pair<Integer,Integer> res = Pair.of(0, a);
 		return ejercicio5_recur_final(a,b,res);
 	}
 	
 	// Solución recursiva no final
-	public static List<Integer> ejercicio5_recur_no_final(int a, int b) {
-		List<Integer> res = new ArrayList<Integer>();
+	public static Pair<Integer,Integer> ejercicio5_recur_no_final(int a, int b) {
+		Pair<Integer,Integer> res = Pair.of(0, a);
 		if (a < b) {
-			res.add(0);
-			res.add(a);
+			res = Pair.of(0, a);
 		} else {
-			res.add(ejercicio5_recur_no_final(a-b,b).get(0)+1);
-			res.add(ejercicio5_recur_no_final(a-b,b).get(1));
+			res = Pair.of(ejercicio5_recur_no_final(a-b,b).a+1, ejercicio5_recur_no_final(a-b,b).b);
 		}
 		return res;
 	}
 	
 	// Solución funcional
-	// Stream.iterate({a,c}, cond.continuidad, op.unario) -> op.unario puede ser función auxiliar t->siguiente(t)
-	
+	public static Pair<Integer,Integer> ejercicio5_funcional(int a, int b) {
+		Pair<Integer,Integer> seed = Pair.of(0,a);
+		Predicate<Pair<Integer,Integer>> pred = new Predicate<Pair<Integer,Integer>>() {
+			public boolean test(Pair<Integer,Integer> p) {
+// System.out.println("p.b: "+p.b+" b: "+b);
+				return p.b >= b;
+			}
+		};
+		UnaryOperator<Pair<Integer,Integer>> xor = aux -> Pair.of(aux.a+1, aux.b-b);
+		List<Pair<Integer,Integer>> list_res = Stream.iterate(seed, pred, xor).collect(Collectors.toList());
+// System.out.println(list_res);
+		try {
+			return list_res.get(list_res.size()-1);
+		} catch (Exception e) {
+			return seed;
+		}
+	}
 	
 	// #######################################################################################################################
 	// Resultados
@@ -68,9 +76,9 @@ public class Ejercicio5 {
 			String[] linea_array = linea.split(",");
 			int a = Integer.parseInt(linea_array[0]);
 			int b = Integer.parseInt(linea_array[1]);
-			List<Integer> res = ejercicio5_itera(a,b);
+			Pair<Integer,Integer> res = ejercicio5_itera(a,b);
 			System.out.println("Entrada: ("+a+","+b+")");
-			System.out.println("Salida:  ("+res.get(0)+","+res.get(1)+")");
+			System.out.println("Salida:  ("+res.a+","+res.b+")");
 			System.out.println("========================================");
 		}
 		System.out.println("");
@@ -80,9 +88,9 @@ public class Ejercicio5 {
 			String[] linea_array = linea.split(",");
 			int a = Integer.parseInt(linea_array[0]);
 			int b = Integer.parseInt(linea_array[1]);
-			List<Integer> res = ejercicio5_recur_final_gen(a,b);
+			Pair<Integer,Integer> res = ejercicio5_recur_final_gen(a,b);
 			System.out.println("Entrada: ("+a+","+b+")");
-			System.out.println("Salida:  ("+res.get(0)+","+res.get(1)+")");
+			System.out.println("Salida:  ("+res.a+","+res.b+")");
 			System.out.println("========================================");
 		}
 		System.out.println("");
@@ -92,12 +100,23 @@ public class Ejercicio5 {
 			String[] linea_array = linea.split(",");
 			int a = Integer.parseInt(linea_array[0]);
 			int b = Integer.parseInt(linea_array[1]);
-			List<Integer> res = ejercicio5_recur_no_final(a,b);
+			Pair<Integer,Integer> res = ejercicio5_recur_no_final(a,b);
 			System.out.println("Entrada: ("+a+","+b+")");
-			System.out.println("Salida:  ("+res.get(0)+","+res.get(1)+")");
+			System.out.println("Salida:  ("+res.a+","+res.b+")");
 			System.out.println("========================================");
 		}
 		System.out.println("");
+		
+		System.out.println("-------------------- TEST DEL MÉTODO FUNCIONAL --------------------");
+		for (String linea: lineas) {
+			String[] linea_array = linea.split(",");
+			int a = Integer.parseInt(linea_array[0]);
+			int b = Integer.parseInt(linea_array[1]);
+			Pair<Integer,Integer> res = ejercicio5_funcional(a,b);
+			System.out.println("Entrada: ("+a+","+b+")");
+			System.out.println("Salida:  ("+res.a+","+res.b+")");
+			System.out.println("========================================");
+		}
 	}
 	
 }

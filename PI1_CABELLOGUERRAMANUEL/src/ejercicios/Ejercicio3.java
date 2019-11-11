@@ -3,12 +3,10 @@ package ejercicios;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import us.lsi.common.Files2;
 import us.lsi.common.Pair;
-import us.lsi.geometria.Punto2D;
 
 public class Ejercicio3 {
 	
@@ -56,7 +54,7 @@ public class Ejercicio3 {
 		Pair<Integer,Integer> seed = Pair.of(0, cadena.length()-1);
 		Predicate<Pair<Integer,Integer>> pred = new Predicate<Pair<Integer,Integer>>() {
 			public boolean test(Pair<Integer,Integer> p) {
-				return p.a == p.b;
+				return p.a <= p.b;
 			}
 		};
 		UnaryOperator<Pair<Integer,Integer>> xor = aux -> Pair.of(aux.a+1, aux.b-1);
@@ -66,7 +64,6 @@ public class Ejercicio3 {
 				return cadena.charAt(p.a) == cadena.charAt(p.b);
 			}
 		};
-		
 		return Stream.iterate(seed, pred, xor).allMatch(pred2);
 	}
 
@@ -86,17 +83,6 @@ public class Ejercicio3 {
 		}
 		System.out.println(cont+" palíndromos de "+lineas.size()+" palabras\n");
 		
-		// Resultado recursivo final
-		cont = 0;
-		for (String linea: lineas) {
-			boolean res = ejercicio3_recur_final_gen(linea);
-			if (res) {
-				cont++;
-			}
-			System.out.println("esPalindromoIterativa("+linea+")="+res);
-		}
-		System.out.println(cont+" palíndromos de "+lineas.size()+" palabras\n");
-		
 		// Resultado recursivo no final
 		cont = 0;
 		for (String linea: lineas) {
@@ -105,19 +91,29 @@ public class Ejercicio3 {
 			if (res) {
 				cont++;
 			}
-			System.out.println("esPalindromoIterativa("+linea+")="+res);
+			System.out.println("esPalindromoNoFinal("+linea+")="+res);
+		}
+		System.out.println(cont+" palíndromos de "+lineas.size()+" palabras\n");
+		
+		// Resultado recursivo final
+		cont = 0;
+		for (String linea: lineas) {
+			boolean res = ejercicio3_recur_final_gen(linea);
+			if (res) {
+				cont++;
+			}
+			System.out.println("esPalindromoFinal("+linea+")="+res);
 		}
 		System.out.println(cont+" palíndromos de "+lineas.size()+" palabras\n");
 		
 		// Resultado funcional
 		cont = 0;
 		for (String linea: lineas) {
-			int i = 0; int j = linea.length()-1;
 			boolean res = ejercicio3_funcional(linea);
 			if (res) {
 				cont++;
 			}
-			System.out.println("esPalindromoIterativa("+linea+")="+res);
+			System.out.println("esPalindromoStream("+linea+")="+res);
 		}
 		System.out.println(cont+" palíndromos de "+lineas.size()+" palabras\n");
 	}
