@@ -42,7 +42,8 @@ public class Ejercicio5 {
 		if (a < b) {
 			res = Pair.of(0, a);
 		} else {
-			res = Pair.of(ejercicio5_recur_no_final(a-b,b).a+1, ejercicio5_recur_no_final(a-b,b).b);
+			Pair<Integer,Integer> aux = ejercicio5_recur_no_final(a-b,b);
+			res = Pair.of(aux.a+1, aux.b);
 		}
 		return res;
 	}
@@ -50,15 +51,9 @@ public class Ejercicio5 {
 	// Solución funcional
 	public static Pair<Integer,Integer> ejercicio5_funcional(int a, int b) {
 		Pair<Integer,Integer> seed = Pair.of(0,a);
-		Predicate<Pair<Integer,Integer>> pred = new Predicate<Pair<Integer,Integer>>() {
-			public boolean test(Pair<Integer,Integer> p) {
-// System.out.println("p.b: "+p.b+" b: "+b);
-				return p.b >= b;
-			}
-		};
+		Predicate<Pair<Integer,Integer>> pred = p-> p.b >= b;
 		UnaryOperator<Pair<Integer,Integer>> xor = aux -> Pair.of(aux.a+1, aux.b-b);
 		List<Pair<Integer,Integer>> list_res = Stream.iterate(seed, pred, xor).collect(Collectors.toList());
-// System.out.println(list_res);
 		try {
 			return list_res.get(list_res.size()-1);
 		} catch (Exception e) {

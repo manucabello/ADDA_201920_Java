@@ -29,7 +29,7 @@ public class Ejercicio3 {
 	
 	// Solución recursiva final
 	public static boolean ejercicio3_recur_final(String cadena, int i, int j, boolean w) {
-		if (i >= j) {
+		if (i >= j || !w) {
 			return w;
 		} else {
 			return ejercicio3_recur_final(cadena, i+1, j-1, w && cadena.charAt(i) == cadena.charAt(j)); 
@@ -42,28 +42,20 @@ public class Ejercicio3 {
 	
 	// Solución recursiva no final
 	public static boolean ejercicio3_recur_no_final(String cadena, int i, int j) {
-		if (i >= j) {
-			return cadena.charAt(i) == cadena.charAt(j);
+		boolean res = cadena.charAt(i) == cadena.charAt(j);
+		if (i >= j || !res) {
+			return res;
 		} else {
-			return ejercicio3_recur_no_final(cadena, i+1, j-1) && cadena.charAt(i) == cadena.charAt(j); 
+			return ejercicio3_recur_no_final(cadena, i+1, j-1) && res;
 		}
 	}
 	
 	// Solución funcional
 	public static boolean ejercicio3_funcional(String cadena) {
 		Pair<Integer,Integer> seed = Pair.of(0, cadena.length()-1);
-		Predicate<Pair<Integer,Integer>> pred = new Predicate<Pair<Integer,Integer>>() {
-			public boolean test(Pair<Integer,Integer> p) {
-				return p.a <= p.b;
-			}
-		};
+		Predicate<Pair<Integer,Integer>> pred = p-> p.a <= p.b;
 		UnaryOperator<Pair<Integer,Integer>> xor = aux -> Pair.of(aux.a+1, aux.b-1);
-
-		Predicate<Pair<Integer,Integer>> pred2 = new Predicate<Pair<Integer,Integer>>() {
-			public boolean test(Pair<Integer,Integer> p) {
-				return cadena.charAt(p.a) == cadena.charAt(p.b);
-			}
-		};
+		Predicate<Pair<Integer,Integer>> pred2 = p-> cadena.charAt(p.a) == cadena.charAt(p.b);
 		return Stream.iterate(seed, pred, xor).allMatch(pred2);
 	}
 
