@@ -38,7 +38,7 @@ public class Ejercicio5 {
 	
 	// Solución recursiva no final
 	public static Pair<Integer,Integer> ejercicio5_recur_no_final(int a, int b) {
-		Pair<Integer,Integer> res = Pair.of(0, a);
+		Pair<Integer,Integer> res;
 		if (a < b) {
 			res = Pair.of(0, a);
 		} else {
