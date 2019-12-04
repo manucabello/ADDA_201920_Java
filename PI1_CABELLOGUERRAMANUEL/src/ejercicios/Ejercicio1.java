@@ -3,7 +3,7 @@ package ejercicios;
 import java.util.ArrayList;
 import java.util.List;
 
-import us.lsi.common.Files2;;
+import us.lsi.common.Files2;
 
 public class Ejercicio1 {
 	
