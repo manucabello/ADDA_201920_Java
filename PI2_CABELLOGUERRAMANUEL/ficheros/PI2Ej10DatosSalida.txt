@@ -1,0 +1,17 @@
+                                                       TEST DEL EJERCICIO 10
+=======================================================================================================================================================
+Entrada: Ramirez(Gomez(Dominguez(Benitez,Fernandez),Jimenez(Hernandez,Perez)),Sanchez(Rodriguez,Suarez))
+Salida:  Los elementos mayores o iguales que Bermudez son 10: [Fernandez, Perez, Jimenez, Gomez, Dominguez, Hernandez, Suarez, Ramirez, Rodriguez, Sanchez]
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Entrada: Ramirez(Gomez(Dominguez(Benitez,Fernandez),Jimenez(Hernandez,Perez)),Sanchez(Rodriguez,Suarez))
+Salida:  Los elementos mayores o iguales que Gonzalez son 7: [Perez, Jimenez, Hernandez, Suarez, Ramirez, Rodriguez, Sanchez]
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Entrada: Ramirez(Gomez(Dominguez(Benitez,Fernandez),Jimenez(Hernandez,Perez)),Sanchez(Rodriguez,Suarez))
+Salida:  Los elementos mayores o iguales que Lopez son 5: [Perez, Suarez, Ramirez, Rodriguez, Sanchez]
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Entrada: Ramirez(Gomez(Dominguez(Benitez,Fernandez),Jimenez(Hernandez,Perez)),Sanchez(Rodriguez,Suarez))
+Salida:  Los elementos mayores o iguales que Menendez son 5: [Perez, Suarez, Ramirez, Rodriguez, Sanchez]
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Entrada: Ramirez(Gomez(Dominguez(Benitez,Fernandez),Jimenez(Hernandez,Perez)),Sanchez(Rodriguez,Suarez))
+Salida:  Los elementos mayores o iguales que Velazquez son 0: []
+-------------------------------------------------------------------------------------------------------------------------------------------------------

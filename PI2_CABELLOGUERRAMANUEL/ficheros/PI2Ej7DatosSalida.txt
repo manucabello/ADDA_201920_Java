@@ -1,0 +1,14 @@
+Arbol: _
+Lista de hojas: []
+
+Arbol: 2
+Lista de hojas: [2]
+
+Arbol: 39(27,2)
+Lista de hojas: [27, 2]
+
+Arbol: 39(27(4,3,test,_),2)
+Lista de hojas: [4, 3, test, 2]
+
+Arbol: 1(6(8(13),7(9(12,11,10))),2(5,4,3))
+Lista de hojas: [13, 12, 11, 10, 5, 4, 3]
