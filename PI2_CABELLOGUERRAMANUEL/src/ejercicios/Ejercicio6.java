@@ -14,7 +14,7 @@ public class Ejercicio6 {
 		BinaryTree<R> res = BinaryTree.empty();
 		if (!tree.isEmpty() && tree.isLeaf()) {
 			res = BinaryTree.leaf(function.apply(tree.getLabel()));
-		} else if (!tree.isEmpty()) {
+		} else if (!tree.isEmpty() && tree.isBinary()) {
 			res =  BinaryTree.binary(function.apply(tree.getLabel()),ejercicio6_binario(tree.getLeft(),function),ejercicio6_binario(tree.getRight(),function));
 		}
 		return res;
@@ -24,7 +24,7 @@ public class Ejercicio6 {
 		Tree<R> res = Tree.empty();
 		if (!tree.isEmpty() && tree.isLeaf()) {
 			res = Tree.leaf(function.apply(tree.getLabel()));
-		} else if (!tree.isEmpty()) {
+		} else if (!tree.isEmpty() && tree.isNary()) {
 			List<Tree<E>> children_e = tree.getChildren();
 			List<Tree<R>> children_r = new ArrayList<Tree<R>>();
 			for (Tree<E> child_e : children_e) {
